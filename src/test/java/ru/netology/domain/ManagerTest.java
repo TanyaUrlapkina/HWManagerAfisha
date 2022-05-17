@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
-    Manager manager = new Manager();
+    MoviesManager manager = new MoviesManager();
 
     @Test
     public void shouldRemoveMovie() {
@@ -18,7 +18,7 @@ class ManagerTest {
         Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
         Movies seventh = new Movies(7, 7, "comedy", "Number one");
 
-        Manager manager = new Manager();
+        MoviesManager manager = new MoviesManager();
         manager.save(first);
         manager.save(second);
         manager.save(third);
@@ -39,7 +39,7 @@ class ManagerTest {
         Movies second = new Movies(2, 2, "cartoon", "Onward");
         Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
 
-        Manager manager = new Manager();
+        MoviesManager manager = new MoviesManager();
         manager.save(first);
         manager.save(second);
         manager.save(third);
@@ -68,7 +68,77 @@ class ManagerTest {
 
         manager.removeId(6);
 
-        Movies[] expected = {fifth, forth, third, second, first};
+        Movies[] expected = {sixth, fifth, forth, third, second, first};
         Movies[] actual = manager.getMax(5);
     }
+
+    @Test
+    void shouldLessLimitMovies() {
+
+        Movies first = new Movies(1, 1, "action", "BloodShot");
+        Movies second = new Movies(2, 2, "cartoon", "Onward");
+        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
+        Movies forth = new Movies(4, 4, "action", "Gentlemen");
+        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
+        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
+
+        manager.save(first);
+        manager.save(second);
+        manager.save(third);
+        manager.save(forth);
+        manager.save(fifth);
+        manager.save(sixth);
+
+        manager.removeId(6);
+
+        Movies[] expected = {sixth, fifth, forth, third, second, first};
+        Movies[] actual = manager.getMin(7);
+    }
+
+    @Test
+    void shouldMoreLimitMovies() {
+
+        Movies first = new Movies(1, 1, "action", "BloodShot");
+        Movies second = new Movies(2, 2, "cartoon", "Onward");
+        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
+        Movies forth = new Movies(4, 4, "action", "Gentlemen");
+        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
+        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
+
+        manager.save(first);
+        manager.save(second);
+        manager.save(third);
+        manager.save(forth);
+        manager.save(fifth);
+        manager.save(sixth);
+
+        manager.removeId(6);
+
+        Movies[] expected = {sixth, fifth, forth, third, second, first};
+        Movies[] actual = manager.getMax(5);
+    }
+
+    @Test
+    void shouldLimitMovies() {
+
+        Movies first = new Movies(1, 1, "action", "BloodShot");
+        Movies second = new Movies(2, 2, "cartoon", "Onward");
+        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
+        Movies forth = new Movies(4, 4, "action", "Gentlemen");
+        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
+        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
+
+        manager.save(first);
+        manager.save(second);
+        manager.save(third);
+        manager.save(forth);
+        manager.save(fifth);
+        manager.save(sixth);
+
+        manager.removeId(6);
+
+        Movies[] expected = {sixth, fifth, forth, third, second, first};
+        Movies[] actual = manager.getMin(6);
+    }
+
 }

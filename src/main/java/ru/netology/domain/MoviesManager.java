@@ -1,20 +1,21 @@
 package ru.netology.domain;
 
-public class Manager {
+public class MoviesManager {
 
-    public Manager manager;
-    public int managerLimit = 10;
+    public MoviesManager manager;
+    public int managerLimit = 6;
 
     public Movies[] movies = new Movies[0];
 
-    public Manager(int managerLimit) {
+    public MoviesManager(int managerLimit) {
         this.managerLimit = managerLimit;
     }
 
-    public Manager() {
+    public MoviesManager() {
+
     }
 
-    public void addNew (Movies movie) {
+    public void addNew(Movies movie) {
         save(movie);
     }
 
@@ -32,7 +33,7 @@ public class Manager {
     }
 
     public Movies[] getAll() {
-        Movies[] movies = manager.findAll();
+        Movies[] movies = findAll();
         Movies[] total = new Movies[movies.length];
         for (int i = 0; i < total.length; i++) {
             int index = movies.length - i - 1;
@@ -58,17 +59,27 @@ public class Manager {
         Movies[] movies = findAll();
         Movies[] total = new Movies[movies.length];
         for (int i = 0; i < total.length; i++) {
-            int index = movies.length -i -1;
-            total[i] = movies [index];
+            int index = movies.length - i - 1;
+            total[i] = movies[index];
         }
         return total;
 
     }
 
-    public Movies[] getMax(int managerLimit){
+    public Movies[] getMax(int managerLimit) {
         Movies[] movies = findLast();
-        Movies[] total =new Movies[managerLimit];
+        Movies[] total = new Movies[managerLimit];
         for (int i = 0; i < managerLimit; i++) {
+            total[i] = movies[i];
+        }
+
+        return total;
+    }
+
+    public Movies[] getMin(int managerLimit) {
+        Movies[] movies = findLast();
+        Movies[] total = new Movies[managerLimit];
+        for (int i = 0; i > managerLimit; i++) {
             total[i] = movies[i];
         }
 
