@@ -2,89 +2,60 @@ package ru.netology.domain;
 
 public class MoviesManager {
 
-    public MoviesManager manager;
-    public int managerLimit = 6;
+    private int managerLimit = 10;
+    private Movies[] moviesList = new Movies[0];
 
-    public Movies[] movies = new Movies[0];
+    public MoviesManager() {
+    }
 
     public MoviesManager(int managerLimit) {
         this.managerLimit = managerLimit;
     }
 
-    public MoviesManager() {
-
+    public Movies[] getMoviesList(){
+        return moviesList;
     }
 
-    public void addNew(Movies movie) {
-        save(movie);
+    public void setMoviesList(Movies[] moviesList) {
+        this.moviesList = moviesList;
     }
 
-    public void save(Movies movie) {
-        int length = movies.length + 1;
-        Movies[] tmp = new Movies[length];
-        System.arraycopy(movies, 0, tmp, 0, movies.length);
-        int lastIndex = tmp.length - 1;
-        tmp[lastIndex] = movie;
-        movies = tmp;
+    public int getManagerLimit() {
+        return managerLimit;
     }
 
-    public Movies[] findAll() {
-        return movies;
+    public void setManagerLimit(int managerLimit) {
+        this.managerLimit = managerLimit;
     }
 
-    public Movies[] getAll() {
-        Movies[] movies = findAll();
-        Movies[] total = new Movies[movies.length];
-        for (int i = 0; i < total.length; i++) {
-            int index = movies.length - i - 1;
-            total[i] = movies[index];
+    public void addMovie(Movies movieAdd){
+        int lenght = moviesList.length + 1;
+        Movies[] tmp = new Movies[lenght];
+        System.arraycopy(moviesList, 0, tmp, 0, moviesList.length);
+        int addFilm = tmp.length - 1;
+        tmp[addFilm] = movieAdd;
+        moviesList = tmp;
+    }
+
+    public Movies[] findLast(){
+        int resultLenght;
+        if (moviesList.length <= managerLimit) {
+            resultLenght = moviesList.length;
+        } else {
+            resultLenght = managerLimit;
         }
-        return total;
+        Movies[] result = new Movies[resultLenght];
+        for (int i = 0; i < resultLenght; i++){
+            int index = moviesList.length - i - 1;
+            result[i] = moviesList[index];
+        }
+        return result;
     }
 
-    public void removeId(int id) {
-        int length = movies.length - 1;
-        Movies[] tmp = new Movies[length];
-        int index = 0;
-        for (Movies movie : movies) {
-            if (movie.getId() != id) {
-                tmp[index] = movie;
-                index++;
-            }
-            movies = tmp;
-        }
-    }
-
-    public Movies[] findLast() {
-        Movies[] movies = findAll();
-        Movies[] total = new Movies[movies.length];
-        for (int i = 0; i < total.length; i++) {
-            int index = movies.length - i - 1;
-            total[i] = movies[index];
-        }
-        return total;
-
-    }
-
-    public Movies[] getMax(int managerLimit) {
-        Movies[] movies = findLast();
-        Movies[] total = new Movies[managerLimit];
-        for (int i = 0; i < managerLimit; i++) {
-            total[i] = movies[i];
-        }
-
-        return total;
-    }
-
-    public Movies[] getMin(int managerLimit) {
-        Movies[] movies = findLast();
-        Movies[] total = new Movies[managerLimit];
-        for (int i = 0; i > managerLimit; i++) {
-            total[i] = movies[i];
-        }
-
-        return total;
+    public Movies[] findAll(){
+        Movies[] result = new Movies[moviesList.length];
+        System.arraycopy(moviesList,0, result, 0, result.length);
+        return result;
     }
 }
-
 

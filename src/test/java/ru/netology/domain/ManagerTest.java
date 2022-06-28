@@ -4,141 +4,114 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagerTest {
-    MoviesManager manager = new MoviesManager();
+class MoviesManagerTest {
+    Movies one = new Movies(1, "Name1");
+    Movies two = new Movies(2, "Name2");
+    Movies three = new Movies(3, "Name3");
+    Movies four = new Movies(4, "Name4");
+    Movies five = new Movies(5, "Name5");
+    Movies six = new Movies(6, "Name6");
+    Movies seven = new Movies(7, "Name7");
+    Movies eight = new Movies(8, "Name8");
+    Movies nine = new Movies(9, "Name9");
+    Movies ten = new Movies(10, "Name10");
+    Movies eleven = new Movies(11, "Name11");
 
     @Test
-    public void shouldRemoveMovie() {
-
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-        Movies forth = new Movies(4, 4, "action", "Gentlemen");
-        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
-        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
-        Movies seventh = new Movies(7, 7, "comedy", "Number one");
-
+    public void movieLimit() {
         MoviesManager manager = new MoviesManager();
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
+        int actual = manager.getManagerLimit();
+        int expected = 10;
+        assertEquals(expected, actual);
+    }
 
-        manager.removeId(5);
-
-        Movies[] expected = {first, second, third, forth};
+    @Test
+    public void addMovies() {
+        MoviesManager manager = new MoviesManager();
+        manager.addMovie(one);
+        manager.addMovie(two);
+        manager.addMovie(three);
+        Movies[] expected = {one, two, three};
         Movies[] actual = manager.findAll();
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldGet3Movies() {
-
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-
+    public void missingMovies() {
         MoviesManager manager = new MoviesManager();
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-
-        Movies[] actual = manager.findLast();
-        Movies[] expected = new Movies[]{third, second, first};
+        Movies[] expected = {};
+        Movies[] actual = manager.findAll();
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldMax5Movies() {
-
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-        Movies forth = new Movies(4, 4, "action", "Gentlemen");
-        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
-        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
-
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-
-        manager.removeId(6);
-
-        Movies[] expected = {sixth, fifth, forth, third, second, first};
-        Movies[] actual = manager.getMax(5);
+    public void addTenMovies() {
+        MoviesManager manager = new MoviesManager();
+        manager.addMovie(one);
+        manager.addMovie(two);
+        manager.addMovie(three);
+        manager.addMovie(four);
+        manager.addMovie(five);
+        manager.addMovie(six);
+        manager.addMovie(seven);
+        manager.addMovie(eight);
+        manager.addMovie(nine);
+        manager.addMovie(ten);
+        Movies[] expected = {one, two, three, four, five, six, seven, eight, nine, ten};
+        Movies[] actual = manager.findAll();
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldLessLimitMovies() {
-
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-        Movies forth = new Movies(4, 4, "action", "Gentlemen");
-        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
-        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
-
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-
-        manager.removeId(6);
-
-        Movies[] expected = {sixth, fifth, forth, third, second, first};
-        Movies[] actual = manager.getMin(7);
+    public void addAllMovies() {
+        MoviesManager manager = new MoviesManager(11);
+        manager.addMovie(one);
+        manager.addMovie(two);
+        manager.addMovie(three);
+        manager.addMovie(four);
+        manager.addMovie(five);
+        manager.addMovie(six);
+        manager.addMovie(seven);
+        manager.addMovie(eight);
+        manager.addMovie(nine);
+        manager.addMovie(ten);
+        manager.addMovie(eleven);
+        Movies[] expected = {one, two, three, four, five, six, seven, eight, nine, ten, eleven};
+        Movies[] actual = manager.findAll();
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldMoreLimitMovies() {
+    public void showTenMovies() {
+        MoviesManager manager = new MoviesManager(10);
+        manager.addMovie(one);
+        manager.addMovie(two);
+        manager.addMovie(three);
+        manager.addMovie(four);
+        manager.addMovie(five);
+        manager.addMovie(six);
+        manager.addMovie(seven);
+        manager.addMovie(eight);
+        manager.addMovie(nine);
+        manager.addMovie(ten);
+        manager.addMovie(eleven);
+        Movies[] expected = {eleven, ten, nine, eight, seven, six, five, four, three, two};
+        Movies[] actual = manager.findLast();
 
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-        Movies forth = new Movies(4, 4, "action", "Gentlemen");
-        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
-        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
-
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-
-        manager.removeId(6);
-
-        Movies[] expected = {sixth, fifth, forth, third, second, first};
-        Movies[] actual = manager.getMax(5);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldLimitMovies() {
+    public void findLastFiveMovies() {
+        MoviesManager manager = new MoviesManager(3);
+        manager.addMovie(one);
+        manager.addMovie(two);
+        manager.addMovie(three);
+        manager.addMovie(four);
 
-        Movies first = new Movies(1, 1, "action", "BloodShot");
-        Movies second = new Movies(2, 2, "cartoon", "Onward");
-        Movies third = new Movies(3, 3, "comedy", "Belgrade Hotel");
-        Movies forth = new Movies(4, 4, "action", "Gentlemen");
-        Movies fifth = new Movies(5, 5, "horror", "Invisible Man");
-        Movies sixth = new Movies(6, 6, "cartoon", "Trolls World Tour");
+        Movies[] expected = {four, three, two};
+        Movies[] actual = manager.findLast();
 
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-
-        manager.removeId(6);
-
-        Movies[] expected = {sixth, fifth, forth, third, second, first};
-        Movies[] actual = manager.getMin(6);
+        assertArrayEquals(expected, actual);
     }
-
 }
